@@ -104,7 +104,7 @@ module Dusen
             end
             Array.wrap(query).each do |phrase|
               phrase_with_placeholders = fields.collect { |field|
-                options[:lowercase] ? "lower(#{field}) #{match_operator} ?" : "#{field} #{match_operator} ?"
+                options[:lowercase] ? "public.unaccent(lower(#{field})) #{match_operator} ?" : "#{field} #{match_operator} ?"
               }.join(" #{join_operator} ")
               like_expression = Dusen::Util.like_expression(phrase)
               bindings = [like_expression] * fields.size
